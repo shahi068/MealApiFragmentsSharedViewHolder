@@ -1,15 +1,14 @@
 package com.adamco.categoryfragmentssharedviewmodel.model.adapters.category_adapter
 
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.adamco.categoryfragmentssharedviewmodel.databinding.CategoryItemBinding
 import com.adamco.categoryfragmentssharedviewmodel.model.data.get_category.Category
 import com.adamco.categoryfragmentssharedviewmodel.viewmodel.MainViewModel
 import com.squareup.picasso.Picasso
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
-import com.adamco.categoryfragmentssharedviewmodel.MainActivity
-
+import com.adamco.categoryfragmentssharedviewmodel.R
 
 class CategoryItemViewHolder(
     val binding: CategoryItemBinding,
@@ -18,20 +17,28 @@ class CategoryItemViewHolder(
 
     private val viewModel: MainViewModel = ViewModelProvider(viewModelStoreOwner)[MainViewModel::class.java]
 
-    fun bindData(category: Category){
-        with(binding){
-            txtID.text = category.idCategory
+    fun bindData(category: Category) {
+        with(binding) {
             txtCategory.text = category.strCategory
-            txtCategoryDesc.text = category.strCategoryDescription
-//            val imageUrl = baseUrl + category.strCategoryThumb
-            val imageUrl = category.strCategoryThumb + "/preview"
-            Picasso.get().load(imageUrl).into(categoryThumbnail)
+            txtCategoryDesc.text = shortenDesc(category.strCategoryDescription, 100)
 
-            entireItem.setOnClickListener{
+            val imageUrl = category.strCategoryThumb
+
+            Picasso.get()
+                .load(imageUrl)
+                .into(categoryThumbnail)
+
+            entireItem.setOnClickListener {
                 viewModel.updateCategory(category.strCategory)
             }
-
         }
     }
 
+    private fun shortenDesc(description: String, maxLength: Int): String {
+        return if (description.length > maxLength) {
+            description.substring(0, maxLength) + "..."
+        } else {
+            description
+        }
+    }
 }
