@@ -20,7 +20,7 @@ class CategoryItemViewHolder(
     fun bindData(category: Category) {
         with(binding) {
             txtCategory.text = category.strCategory
-            txtCategoryDesc.text = shortenDesc(category.strCategoryDescription, 100)
+            txtCategoryDesc.text = shortenDesc(category.strCategoryDescription, 300)
 
             val imageUrl = category.strCategoryThumb
 
