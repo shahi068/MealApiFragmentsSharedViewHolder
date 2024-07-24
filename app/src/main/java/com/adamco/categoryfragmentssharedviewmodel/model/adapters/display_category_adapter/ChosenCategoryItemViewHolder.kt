@@ -20,7 +20,6 @@ class ChosenCategoryItemViewHolder(
 
     fun bindData(meals: Meal){
         with(binding){
-            txtID.text = meals.idMeal
             txtMealName.text = meals.strMeal
 //            val imageUrl = baseUrl + category.strCategoryThumb
             val imageUrl = meals.strMealThumb + "/preview"
